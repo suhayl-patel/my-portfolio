@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suhayl Patel - Portfolio</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        background: '#f8fafc', /* Slate 50 - Brighter/Natural */
+                        surface: '#ffffff',    /* White */
+                        primary: '#4f46e5',    /* Indigo 600 */
+                        secondary: '#64748b',  /* Slate 500 */
+                        heading: '#1e293b',    /* Slate 800 */
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Glassmorphism Utilities - Updated for Light Theme */
+        .glass {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(226, 232, 240, 0.8); /* Slate 200 */
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+        }
+
+        .glass-card:hover {
+            border-color: rgba(79, 70, 229, 0.3); /* Primary with opacity */
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.08);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        /* Carousel Styles */
+        .carousel-container {
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            height: 100%;
+        }
+        
+        .carousel-slide {
+            min-width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Custom style for 9:16 aspect ratio (used in Project 1) */
+        .aspect-9-16 {
+            width: 100%;
+            height: 300px; /* Default height on mobile */
+            max-width: 18rem; /* Max width on mobile to avoid stretching too much */
+            margin: 0 auto; 
+        }
+        @media (min-width: 768px) { /* md breakpoint */
+            /* Reduced size for better vertical balance: w-56 (14rem) x h-96 (24rem) */
+            .aspect-9-16 {
+                width: 14rem; /* 224px */
+                height: 24rem; /* 384px */
+                max-width: none;
+            }
+        }
+
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.8);
+            color: #1e293b;
+            border: 1px solid rgba(0,0,0,0.05);
+            padding: 8px;
+            cursor: pointer;
+            border-radius: 50%;
+            opacity: 0;
+            transition: all 0.2s;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .carousel-btn:hover {
+            background: white;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .carousel-container:hover .carousel-btn { opacity: 1; }
+        .carousel-btn.prev { left: 12px; }
+        .carousel-btn.next { right: 12px; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 5px; border: 2px solid #f1f5f9; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
+</head>
+<body class="bg-background text-secondary antialiased">
+
+    <!-- NAVIGATION -->
+    <nav class="fixed w-full z-50 glass top-0 transition-all duration-300">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0">
+                    <a href="#" class="text-xl font-bold text-heading tracking-tight">
+                        Suhayl<span class="text-primary"> Patel</span>
+                    </a>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-center space-x-8">
+                        <a href="#about" class="text-sm font-medium text-secondary hover:text-primary transition-colors">About</a>
+                        <a href="#experience" class="text-sm font-medium text-secondary hover:text-primary transition-colors">Experience</a>
+                        <a href="#education" class="text-sm font-medium text-secondary hover:text-primary transition-colors">Education</a>
+                        <a href="#projects" class="text-sm font-medium text-secondary hover:text-primary transition-colors">Projects</a>
+                        <!-- Resume Link -->
+                        <a href="resume.pdf" target="_blank" class="flex items-center gap-2 text-sm font-medium text-secondary hover:text-primary transition-colors">
+                            <i data-lucide="file-text" class="w-4 h-4"></i> Resume
+                        </a>
+                        <!-- LinkedIn Button -->
+                        <a href="https://linkedin.com" target="_blank" class="bg-primary text-white border border-transparent hover:bg-indigo-700 px-5 py-2 rounded-full text-sm font-medium transition-all shadow-sm hover:shadow-md">
+                            LinkedIn
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-heading hover:text-primary p-2">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Panel -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white/95 backdrop-blur-md border-b border-slate-200 absolute w-full left-0 top-20 shadow-lg">
+            <div class="px-4 pt-2 pb-6 space-y-2">
+                <a href="#about" class="block px-3 py-3 rounded-md text-base font-medium text-heading hover:bg-slate-50">About</a>
+                <a href="#experience" class="block px-3 py-3 rounded-md text-base font-medium text-heading hover:bg-slate-50">Experience</a>
+                <a href="#education" class="block px-3 py-3 rounded-md text-base font-medium text-heading hover:bg-slate-50">Education</a>
+                <a href="#projects" class="block px-3 py-3 rounded-md text-base font-medium text-heading hover:bg-slate-50">Projects</a>
+                <a href="#" class="block px-3 py-3 rounded-md text-base font-medium text-heading hover:bg-slate-50">Resume</a>
+                <a href="#" class="block px-3 py-3 rounded-md text-base font-medium text-primary">LinkedIn</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-20">
+
+        <!-- INTRO HERO -->
+        <section class="py-20 flex flex-col-reverse md:flex-row items-center gap-12 text-center md:text-left">
+            <div class="flex-1 space-y-6">
+                <h1 class="text-5xl md:text-7xl font-bold text-heading tracking-tight">
+                    Hello, I'm <span class="text-primary">Suhayl</span>.
+                </h1>
+                <p class="text-xl text-secondary max-w-2xl leading-relaxed mx-auto md:mx-0">
+                    I build accessible, pixel-perfect, and performant web experiences.
+                    Currently focused on bridging the gap between design and engineering.
+                </p>
+                <div class="pt-4 flex gap-4 justify-center md:justify-start">
+                    <a href="#projects" class="px-6 py-3 bg-heading text-white rounded-lg font-medium hover:bg-primary transition-colors">View Projects</a>
+                    <a href="#contact" class="px-6 py-3 bg-white text-heading border border-slate-200 rounded-lg font-medium hover:bg-slate-50 transition-colors">Contact Me</a>
+                </div>
+            </div>
+            
+            <!-- Profile Picture -->
+            <div class="flex-shrink-0 relative group">
+                <div class="absolute -inset-1 bg-gradient-to-r from-primary to-purple-600 rounded-full blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
+                <!-- Profile Image used from user request -->
+                <img src="https://raw.githubusercontent.com/suhayl-patel/my-portfolio/main/Portfolio%20Image.png" 
+                     alt="Suhayl Patel" 
+                     class="relative w-64 h-64 md:w-80 md:h-80 rounded-full object-cover shadow-2xl border-4 border-white bg-slate-100">
+            </div>
+        </section>
+
+        <!-- ABOUT ME -->
+        <section id="about" class="py-16 border-t border-slate-200">
+            <div class="flex items-center gap-3 mb-8">
+                <i data-lucide="user" class="text-primary w-6 h-6"></i>
+                <h2 class="text-2xl font-bold text-heading">About Me</h2>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Main Text -->
+                <div class="md:col-span-2 space-y-4 text-secondary leading-relaxed text-lg">
+                    <p>
+                        I'm a software engineer passionate about creating apps that are engaging, accessible, and meaningful. 
+                        I enjoy learning, experimenting, and sharing knowledge — whether that's through building projects 
+                        or contributing to open source.
+                    </p>
+                    <p>
+                        My journey started with a curiosity for how things work on the web, and has evolved into a 
+                        career building robust full-stack applications.
+                    </p>
+                </div>
+
+                <!-- Philosophy/Focus Cards -->
+                <div class="space-y-4">
+                    <div class="glass-card p-5 rounded-xl bg-white">
+                        <h3 class="text-heading font-semibold mb-2 text-sm uppercase tracking-wider">Philosophy</h3>
+                        <p class="text-sm text-secondary">Clean design meets intuitive functionality.</p>
+                    </div>
+                    <div class="glass-card p-5 rounded-xl bg-white">
+                        <h3 class="text-heading font-semibold mb-2 text-sm uppercase tracking-wider">Focus</h3>
+                        <p class="text-sm text-secondary">Full Stack Development & UI/UX Design.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- EXPERIENCE -->
+        <section id="experience" class="py-16 border-t border-slate-200">
+            <div class="flex items-center gap-3 mb-10">
+                <i data-lucide="briefcase" class="text-primary w-6 h-6"></i>
+                <h2 class="text-2xl font-bold text-heading">Experience</h2>
+            </div>
+
+            <div class="space-y-6 max-w-4xl">
+                
+                <!-- Experience Card (B&Q - Customer Service Advisor / Digital Picker) -->
+                <div class="glass-card p-6 rounded-2xl flex flex-col md:flex-row gap-6 bg-white">
+                    <div class="flex-shrink-0">
+                        <!-- B&Q Logo -->
+                        <div class="w-16 h-16 rounded-xl bg-white flex items-center justify-center border border-slate-100 p-2 overflow-hidden">
+                            <img src="https://raw.githubusercontent.com/suhayl-patel/my-portfolio/main/B%26Q_company_logo.png" 
+                                 alt="B&Q Logo" 
+                                 class="w-full h-full object-contain">
+                        </div>
+                    </div>
+                    <div class="flex-grow">
+                        <div class="flex flex-col md:flex-row md:items-center justify-between mb-2">
+                            <h3 class="text-xl font-bold text-heading">Customer Service Advisor - Digital Picker</h3>
+                            <!-- START: Updated B&Q Dates to show two employment periods -->
+                            <div class="flex flex-col gap-1 md:items-end">
+                                <span class="text-xs font-medium text-secondary bg-slate-100 px-3 py-1 rounded-full border border-slate-200">Apr 2023 — July 2024</span>
+                                <span class="text-xs font-medium text-secondary bg-slate-100 px-3 py-1 rounded-full border border-slate-200">Mar 2024 — Jul 2025</span>
+                            </div>
+                            <!-- END: Updated B&Q Dates -->
+                        </div>
+                        <div class="text-base text-slate-600 font-medium mb-4">B&Q</div>
+                        <ul class="list-disc list-inside text-secondary space-y-1 text-sm">
+                            <li>Used digital devices to pick and prepare store-to-home orders (tiles, soil, fences, etc.) onto wrapped and banded pallets for delivery.</li>
+                            <li>Optimised order picking routes from hourly pick-lists throughout the store and organised daily stock transfers between stores.</li>
+                            <li>Liaised with duty managers and contacted click-and-collect customers regarding out-of-stock items and order status updates.</li>
+                            <li>Reported safety hazards, cleaned spills, and assisted with warehouse organisation and delivery offloading.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Experience Card (M&S - Customer Service Advisor) -->
+                <div class="glass-card p-6 rounded-2xl flex flex-col md:flex-row gap-6 bg-white">
+                    <div class="flex-shrink-0">
+                        <!-- M&S Logo -->
+                        <div class="w-16 h-16 rounded-xl bg-white flex items-center justify-center border border-slate-100 p-2 overflow-hidden">
+                            <img src="https://raw.githubusercontent.com/suhayl-patel/my-portfolio/main/M%26S%20Logo.jpeg" 
+                                 alt="M&S Logo" 
+                                 class="w-full h-full object-contain">
+                        </div>
+                    </div>
+                    <div class="flex-grow">
+                        <div class="flex flex-col md:flex-row md:items-center justify-between mb-2">
+                            <h3 class="text-xl font-bold text-heading">Customer Service Advisor</h3>
+                            <span class="text-sm font-medium text-secondary bg-slate-100 px-3 py-1 rounded-full border border-slate-200">Nov 2024 — Dec 2024</span>
+                        </div>
+                        <div class="text-base text-slate-600 font-medium mb-4">M&S</div>
+                        <ul class="list-disc list-inside text-secondary space-y-1 text-sm">
+                            <li>Served customers efficiently on the shop floor and service points while building expert product knowledge to make recommendations.</li>
+                            <li>Engaged with customers to understand their needs, make recommendations and deliver remarkable service.</li>
+                            <li>Monitored and delivered on daily sales targets, priorities, promotions, and selling opportunities.</li>
+                            <li>Utilised digital tools and communication channels to deliver for the customer every time.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Experience Card (IAG GBS - IT Graduate) -->
+                <div class="glass-card p-6 rounded-2xl flex flex-col md:flex-row gap-6 bg-white">
+                    <div class="flex-shrink-0">
+                        <!-- IAG Tech Logo -->
+                        <div class="w-16 h-16 rounded-xl bg-indigo-50 flex items-center justify-center border border-indigo-100 p-2 overflow-hidden">
+                            <img src="https://raw.githubusercontent.com/suhayl-patel/my-portfolio/main/IAG%20Tech.png" 
+                                 alt="IAG Tech Logo" 
+                                 class="w-full h-full object-contain">
+                        </div>
+                    </div>
+                    <div class="flex-grow">
+                        <div class="flex flex-col md:flex-row md:items-center justify-between mb-2">
+                            <h3 class="text-xl font-bold text-heading">IT Graduate</h3>
+                            <span class="text-sm font-medium text-secondary bg-slate-100 px-3 py-1 rounded-full border border-slate-200">Sep 2020 — Jul 2022</span>
+                        </div>
+                        <div class="text-base text-slate-600 font-medium mb-4">IAG GBS - IAG Tech</div>
+                        <ul class="list-disc list-inside text-secondary space-y-3 text-sm">
+                            <li><span class="font-semibold text-heading">Enterprise Architecture Tooling:</span> Collected user stories, evaluated 20+ tools using Gartner/Forrester research, presented to CIO, and coordinated supplier demos.</li>
+                            <li><span class="font-semibold text-heading">GDP - HANGAR 51 (Flightradar 24 PoV):</span> Communicated with technical experts for commercial quotes, performed SWOT analysis, and presented product capabilities cross-OpCo.</li>
+                            <li><span class="font-semibold text-heading">DATA OPS SQUAD - IBERIA:</span> Built an API with FastAPI for the DeliverFly project, managed team Python code on GitLab, and used automated testing methods.</li>
+                            <li><span class="font-semibold text-heading">Brand Protection:</span> Collected requirements for a new RFP, shortlisted three tools using Forrester, and ran a proof of value for social media brand protection tooling.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Experience Card (Frasers Group - Lillywhites) -->
+                <div class="glass-card p-6 rounded-2xl flex flex-col md:flex-row gap-6 bg-white">
+                    <div class="flex-shrink-0">
+                        <!-- Lillywhites Logo -->
+                        <div class="w-16 h-16 rounded-xl bg-white flex items-center justify-center border border-slate-100 p-2 overflow-hidden">
+                            <img src="https://raw.githubusercontent.com/suhayl-patel/my-portfolio/main/Lillywhites.png" 
+                                 alt="Lillywhites Logo" 
+                                 class="w-full h-full object-contain">
+                        </div>
+                    </div>
+                    <div class="flex-grow">
+                        <div class="flex flex-col md:flex-row md:items-center justify-between mb-2">
+                            <h3 class="text-xl font-bold text-heading">Customer Sales Assistant</h3>
+                            <span class="text-sm font-medium text-secondary bg-slate-100 px-3 py-1 rounded-full border border-slate-200">Aug 2019 — Sep 2020</span>
+                        </div>
+                        <div class="text-base text-slate-600 font-medium mb-4">Frasers Group - Lillywhites (Sports Direct)</div>
+                        <ul class="list-disc list-inside text-secondary space-y-1 text-sm">
+                            <li>Interacted with customers and influenced them to buy high value products.</li>
+                            <li>Displayed confidence and showed compassion when giving advice and information.</li>
+                            <li>Cash handling, returns and serving customers on the tills.</li>
+                            <li>Assisted the team with the weekly stock take of assets to keep track of products available.</li>
+                            <li>Update displays of products to ensure the floorplan was ready for each new day of sale.</li>
+                            <li>Communicated with team members via radio to request shoes by model and size from the stock room.</li>
+                            <li>Searched for shoes for customers from the stock room based on location stated on stock check digital tools.</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- EDUCATION -->
+        <section id="education" class="py-16 border-t border-slate-200">
+            <div class="flex items-center gap-3 mb-10">
+                <i data-lucide="graduation-cap" class="text-primary w-6 h-6"></i>
+                <h2 class="text-2xl font-bold text-heading">Education</h2>
+            </div>
+
+            <div class="space-y-8 max-w-4xl">
+                
+                <!-- University College London -->
+                <div class="glass-card p-6 rounded-2xl bg-white">
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        
+                        <!-- Left Column: Academic Details -->
+                        <div>
+                            <div class="flex flex-col md:flex-row md:items-center justify-between mb-2">
+                                <h3 class="text-xl font-bold text-heading">University College London (UCL)</h3>
+                                <!-- Badge Styles and Layout Fixes -->
+                                <span class="text-sm font-medium text-secondary bg-slate-100 px-3 py-1 rounded-full border border-slate-200 md:ml-4 md:whitespace-nowrap flex-shrink-0">2017 — 2020</span>
+                                <!-- End Badge -->
+                            </div>
+                            <!-- Degree Title -->
+                            <div class="text-base text-slate-600 font-medium mb-1">Bachelor of Engineering (BEng) in Engineering (Mechanical)</div>
+                            <!-- New Grade Line -->
+                            <div class="text-sm font-bold text-primary mb-4">Grade: First Class Honours</div>
+                            
+                            <ul class="list-disc list-inside text-secondary space-y-3 text-sm mb-6">
+                                <li>
+                                    <span class="font-semibold text-heading">Individual Project:</span> Using genetic algorithms to improve the mechanical design of RC helicopter rotor head systems.
+                                </li>
+                                <li>
+                                    <span class="font-semibold text-heading">Minor in Intelligent Systems:</span>
+                                    <ul class="list-disc list-inside ml-4 mt-1 space-y-1 text-xs">
+                                        <li>Studied path finding algorithms for autonomous robots.</li>
+                                        <li>Researched and compared machine learning algorithms for a group project on predicting football scores.</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Right Column: PDF Viewer -->
+                        <div>
+                            <h4 class="text-lg font-semibold text-heading mb-3 border-b pb-2">Individual Project Thesis (Embedded PDF)</h4>
+                            <iframe 
+                                src="https://drive.google.com/file/d/1ZBmxSEkwR9Y12xok7a4gzm8jcLtZHeDC/preview" 
+                                title="UCL Individual Project Thesis PDF"
+                                class="w-full h-[400px] rounded-lg border border-slate-300 shadow-md"
+                                loading="lazy"
+                            >
+                            </iframe>
+                            <!-- Fallback for browsers that don't support iframes or secure environments block external embeds -->
+                            <p class="mt-2 text-center text-sm text-secondary">
+                                If the PDF doesn't load, you can view or download the thesis on Google Drive 
+                                <a href="https://drive.google.com/file/d/1ZBmxSEkwR9Y12xok7a4gzm8jcLtZHeDC/view?usp=sharing" target="_blank" class="text-primary underline font-medium">here</a>.
+                            </p>
+                        </div>
+                        
+                    </div>
+                </div>
+
+                <!-- A-Levels (UPDATED HEADING STRUCTURE) -->
+                <div class="glass-card p-6 rounded-2xl bg-white">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between mb-2">
+                        <!-- Main Heading -->
+                        <h3 class="text-xl font-bold text-heading">Newham Collegiate Sixth Form Centre</h3>
+                        <span class="text-sm font-medium text-secondary bg-slate-100 px-3 py-1 rounded-full border border-slate-200">2015 — 2017</span>
+                    </div>
+                    <!-- Subheading -->
+                    <div class="text-base text-slate-600 font-medium mb-4">A-Levels</div>
+                    
+                    <ul class="list-disc list-inside text-secondary space-y-1 text-sm">
+                        <li>Mathematics - <span class="font-bold text-primary">A*</span></li>
+                        <li>Further Mathematics - <span class="font-bold text-primary">A*</span></li>
+                        <li>Physics - <span class="font-bold text-primary">A*</span></li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- PROJECTS (Updated Horizontal Layout + Carousel) -->
+        <section id="projects" class="py-16 border-t border-slate-200">
+            <div class="flex items-center gap-3 mb-10">
+                <i data-lucide="rocket" class="text-primary w-6 h-6"></i>
+                <h2 class="text-2xl font-bold text-heading">Projects</h2>
+            </div>
+
+            <div class="flex flex-col gap-12">
+
+                <!-- Project Card 1: VERTICAL CAROUSEL (9:16) -->
+                <div class="glass-card p-6 md:p-8 rounded-3xl flex flex-col md:flex-row gap-8 items-start bg-white">
+                    
+                    <!-- Left: Info (Wider on Desktop) -->
+                    <div class="w-full md:w-8/12 order-2 md:order-1 flex flex-col justify-between h-full">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <h3 class="text-2xl font-bold text-heading">Finance Dashboard (Mobile View)</h3>
+                                <span class="text-xs font-mono font-bold text-slate-400 bg-slate-100 px-2 py-1 rounded">2024</span>
+                            </div>
+                            <p class="text-secondary leading-relaxed mb-6">
+                                A comprehensive dashboard for tracking personal expenses and investments. This project showcases a mobile-first design, featuring real-time data visualization via Chart.js, export capabilities, and a fully responsive interface perfect for on-the-go finance management.
+                            </p>
+                            
+                            <!-- Tech Stack -->
+                            <div class="flex flex-wrap gap-2 mb-8">
+                                <span class="px-3 py-1 text-xs font-medium rounded-full bg-indigo-50 text-indigo-600 border border-indigo-100">React</span>
+                                <span class="px-3 py-1 text-xs font-medium rounded-full bg-blue-50 text-blue-600 border border-blue-100">TypeScript</span>
+                                <span class="px-3 py-1 text-xs font-medium rounded-full bg-emerald-50 text-emerald-600 border border-emerald-100">Tailwind</span>
+                            </div>
+                        </div>
+
+                        <!-- Links -->
+                        <div class="flex gap-4">
+                            <a href="#" class="flex items-center gap-2 text-sm font-semibold text-heading hover:text-primary transition-colors border-b-2 border-transparent hover:border-primary pb-0.5">
+                                <i data-lucide="github" class="w-4 h-4"></i> View Code
+                            </a>
+                            <a href="#" class="flex items-center gap-2 text-sm font-semibold text-heading hover:text-primary transition-colors border-b-2 border-transparent hover:border-primary pb-0.5">
+                                <i data-lucide="external-link" class="w-4 h-4"></i> Live Demo
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Right: Vertical Carousel (Narrower on Desktop) -->
+                    <div class="w-full md:w-4/12 order-1 md:order-2 flex justify-center">
+                        <div class="carousel-container relative aspect-9-16 rounded-2xl overflow-hidden shadow-xl border border-slate-100 group">
+                            <div class="carousel-track h-full" id="track-p1">
+                                <!-- Placeholder images for 9:16 mobile screens (w=224, h=384 approx) -->
+                                <img src="https://images.unsplash.com/photo-1627993206233-68d7168d601b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0MDMyNTF8MHwxfGFsbHwxfHx8fHx8fDJ8fDE3MDk3MzY3MTJ8&ixlib=rb-4.0.3&q=80&w=224&h=384" class="carousel-slide" alt="Mobile Dashboard 1">
+                                <img src="https://images.unsplash.com/photo-1599026330962-d98c365d9531?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0MDMyNTF8MHwxfGFsbHwyfHx8fHx8fDJ8fDE3MDk3MzY3MTJ8&ixlib=rb-4.0.3&q=80&w=224&h=384" class="carousel-slide" alt="Mobile Dashboard 2">
+                                <img src="https://images.unsplash.com/photo-1587588354456-480931168478?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0MDMyNTF8MHwxfGFsbHwzfHx8fHx8fDJ8fDE3MDk3MzY3MTJ8&ixlib=rb-4.0.3&q=80&w=224&h=384" class="carousel-slide" alt="Mobile Dashboard 3">
+                            </div>
+                            <button class="carousel-btn prev" onclick="moveCarousel('track-p1', -1)"><i data-lucide="chevron-left" class="w-5 h-5"></i></button>
+                            <button class="carousel-btn next" onclick="moveCarousel('track-p1', 1)"><i data-lucide="chevron-right" class="w-5 h-5"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 2: STANDARD CAROUSEL (Horizontal) -->
+                <div class="glass-card p-6 md:p-8 rounded-3xl flex flex-col md:flex-row gap-8 items-center bg-white">
+                    
+                    <!-- Left: Info -->
+                    <div class="w-full md:w-5/12 order-2 md:order-1 flex flex-col justify-between h-full">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <h3 class="text-2xl font-bold text-heading">Social Connect</h3>
+                                <span class="text-xs font-mono font-bold text-slate-400 bg-slate-100 px-2 py-1 rounded">2023</span>
+                            </div>
+                            <p class="text-secondary leading-relaxed mb-6">
+                                A minimalist social media platform focused on text-based interactions. Implements websockets for real-time messaging, user authentication, and a feed algorithm based on user interests.
+                            </p>
+                            
+                            <!-- Tech Stack -->
+                            <div class="flex flex-wrap gap-2 mb-8">
+                                <span class="px-3 py-1 text-xs font-medium rounded-full bg-orange-50 text-orange-600 border border-orange-100">Vue.js</span>
+                                <span class="px-3 py-1 text-xs font-medium rounded-full bg-purple-50 text-purple-600 border border-purple-100">Firebase</span>
+                                <span class="px-3 py-1 text-xs font-medium rounded-full bg-slate-100 text-slate-600 border border-slate-200">Socket.io</span>
+                            </div>
+                        </div>
+
+                        <!-- Links -->
+                        <div class="flex gap-4">
+                            <a href="#" class="flex items-center gap-2 text-sm font-semibold text-heading hover:text-primary transition-colors border-b-2 border-transparent hover:border-primary pb-0.5">
+                                <i data-lucide="github" class="w-4 h-4"></i> View Code
+                            </a>
+                            <a href="#" class="flex items-center gap-2 text-sm font-semibold text-heading hover:text-primary transition-colors border-b-2 border-transparent hover:border-primary pb-0.5">
+                                <i data-lucide="external-link" class="w-4 h-4"></i> Live Demo
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Right: Carousel -->
+                    <div class="w-full md:w-7/12 order-1 md:order-2">
+                        <div class="carousel-container relative h-64 md:h-80 rounded-2xl overflow-hidden shadow-sm border border-slate-100 group">
+                            <div class="carousel-track h-full" id="track-p2">
+                                <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=1200&q=80" class="carousel-slide" alt="App 1">
+                                <img src="https://images.unsplash.com/photo-1611162616475-46b635cb6868?auto=format&fit=crop&w=1200&q=80" class="carousel-slide" alt="App 2">
+                            </div>
+                            <button class="carousel-btn prev" onclick="moveCarousel('track-p2', -1)"><i data-lucide="chevron-left" class="w-5 h-5"></i></button>
+                            <button class="carousel-btn next" onclick="moveCarousel('track-p2', 1)"><i data-lucide="chevron-right" class="w-5 h-5"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- TECH & TOOLS -->
+        <section id="tech" class="py-16 border-t border-slate-200">
+            <h2 class="text-2xl font-bold text-heading mb-8 flex items-center gap-3">
+                <i data-lucide="cpu" class="text-primary w-6 h-6"></i> Tech & Tools
+            </h2>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Category 1 -->
+                <div>
+                    <h3 class="text-sm font-semibold text-secondary mb-4 uppercase tracking-wider">Languages & Frontend</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-4 py-2 bg-white border border-slate-200 shadow-sm rounded-lg text-sm text-heading font-medium hover:border-primary hover:text-primary transition-colors cursor-default">JavaScript (ES6+)</span>
+                        <span class="px-4 py-2 bg-white border border-slate-200 shadow-sm rounded-lg text-sm text-heading font-medium hover:border-primary hover:text-primary transition-colors cursor-default">TypeScript</span>
+                        <span class="px-4 py-2 bg-white border border-slate-200 shadow-sm rounded-lg text-sm text-heading font-medium hover:border-primary hover:text-primary transition-colors cursor-default">React</span>
+                        <span class="px-4 py-2 bg-white border border-slate-200 shadow-sm rounded-lg text-sm text-heading font-medium hover:border-primary hover:text-primary transition-colors cursor-default">Tailwind CSS</span>
+                        <span class="px-4 py-2 bg-white border border-slate-200 shadow-sm rounded-lg text-sm text-heading font-medium hover:border-primary hover:text-primary transition-colors cursor-default">HTML5 / CSS3</span>
+                    </div>
+                </div>
+
+                <!-- Category 2 -->
+                <div>
+                    <h3 class="text-sm font-semibold text-secondary mb-4 uppercase tracking-wider">Backend & Tools</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-4 py-2 bg-white border border-slate-200 shadow-sm rounded-lg text-sm text-heading font-medium hover:border-primary hover:text-primary transition-colors cursor-default">Node.js</span>
+                        <span class="px-4 py-2 bg-white border border-slate-200 shadow-sm rounded-lg text-sm text-heading font-medium hover:border-primary hover:text-primary transition-colors cursor-default">Python</span>
+                        <span class="px-4 py-2 bg-white border border-slate-200 shadow-sm rounded-lg text-sm text-heading font-medium hover:border-primary hover:text-primary transition-colors cursor-default">Git / GitHub</span>
+                        <span class="px-4 py-2 bg-white border border-slate-200 shadow-sm rounded-lg text-sm text-heading font-medium hover:border-primary hover:text-primary transition-colors cursor-default">Figma</span>
+                        <span class="px-4 py-2 bg-white border border-slate-200 shadow-sm rounded-lg text-sm text-heading font-medium hover:border-primary hover:text-primary transition-colors cursor-default">VS Code</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FIND ME ONLINE -->
+        <section id="contact" class="py-16 border-t border-slate-200">
+            <h2 class="text-2xl font-bold text-heading mb-8 flex items-center gap-3">
+                <i data-lucide="at-sign" class="text-primary w-6 h-6"></i> Find Me Online
+            </h2>
+
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <a href="mailto:hello@example.com" class="glass-card p-5 rounded-xl flex items-center gap-4 group hover:border-primary">
+                    <div class="bg-slate-50 p-3 rounded-lg group-hover:bg-primary/10 transition-colors text-slate-600 group-hover:text-primary">
+                        <i data-lucide="mail" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs font-semibold text-secondary uppercase tracking-wide">Email Me</div>
+                        <div class="text-heading font-medium">hello@example.com</div>
+                    </div>
+                </a>
+                
+                <a href="https://github.com" target="_blank" class="glass-card p-5 rounded-xl flex items-center gap-4 group hover:border-primary">
+                    <div class="bg-slate-50 p-3 rounded-lg group-hover:bg-primary/10 transition-colors text-slate-600 group-hover:text-primary">
+                        <i data-lucide="github" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs font-semibold text-secondary uppercase tracking-wide">GitHub</div>
+                        <div class="text-heading font-medium">@suhaylpatel</div>
+                    </div>
+                </a>
+
+                <a href="https://linkedin.com" target="_blank" class="glass-card p-5 rounded-xl flex items-center gap-4 group hover:border-primary">
+                    <div class="bg-slate-50 p-3 rounded-lg group-hover:bg-primary/10 transition-colors text-slate-600 group-hover:text-primary">
+                        <i data-lucide="linkedin" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs font-semibold text-secondary uppercase tracking-wide">LinkedIn</div>
+                        <div class="text-heading font-medium">Connect with me</div>
+                    </div>
+                </a>
+            </div>
+
+            <footer class="mt-24 pt-8 border-t border-slate-200 text-center text-sm text-slate-400">
+                <p>&copy; 2024 Suhayl Patel. Built with HTML, Tailwind & Coffee.</p>
+            </footer>
+        </section>
+
+    </main>
+
+    <!-- SCRIPTS -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Mobile Menu Toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        // Carousel Logic
+        function moveCarousel(trackId, direction) {
+            const track = document.getElementById(trackId);
+            const slides = track.children;
+            const containerWidth = track.parentElement.getBoundingClientRect().width;
+            
+            // Get current index from data attribute or default to 0
+            let currentIndex = parseInt(track.dataset.index || 0);
+            
+            // Calculate new index
+            let newIndex = currentIndex + direction;
+            
+            // Bounds check
+            if (newIndex < 0) newIndex = slides.length - 1;
+            if (newIndex >= slides.length) newIndex = 0;
+            
+            // Update UI
+            track.style.transform = `translateX(-${newIndex * 100}%)`;
+            
+            // Save state
+            track.dataset.index = newIndex;
+        }
+
+        // Handle window resize for carousel alignment
+        window.addEventListener('resize', () => {
+            document.querySelectorAll('.carousel-track').forEach(track => {
+                track.style.transform = `translateX(0%)`;
+                track.dataset.index = 0;
+            });
+        });
+    </script>
+</body>
+</html>

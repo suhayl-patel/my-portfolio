@@ -444,55 +444,6 @@
             </div>
 
             <div class="flex flex-col gap-12">
-
-                <!-- Project Card 1: VERTICAL CAROUSEL (9:16) -->
-                <div class="glass-card p-6 md:p-8 rounded-3xl flex flex-col md:flex-row gap-8 items-start bg-white">
-                    
-                    <!-- Left: Info (Wider on Desktop) -->
-                    <div class="w-full md:w-8/12 order-2 md:order-1 flex flex-col justify-between h-full">
-                        <div>
-                            <div class="flex items-center justify-between mb-3">
-                                <h3 class="text-2xl font-bold text-heading">Finance Dashboard (Mobile View)</h3>
-                                <span class="text-xs font-mono font-bold text-slate-400 bg-slate-100 px-2 py-1 rounded">2024</span>
-                            </div>
-                            <p class="text-secondary leading-relaxed mb-6">
-                                A comprehensive dashboard for tracking personal expenses and investments. This project showcases a mobile-first design, featuring real-time data visualization via Chart.js, export capabilities, and a fully responsive interface perfect for on-the-go finance management.
-                            </p>
-                            
-                            <!-- Tech Stack -->
-                            <div class="flex flex-wrap gap-2 mb-8">
-                                <span class="px-3 py-1 text-xs font-medium rounded-full bg-indigo-50 text-indigo-600 border border-indigo-100">React</span>
-                                <span class="px-3 py-1 text-xs font-medium rounded-full bg-blue-50 text-blue-600 border border-blue-100">TypeScript</span>
-                                <span class="px-3 py-1 text-xs font-medium rounded-full bg-emerald-50 text-emerald-600 border border-emerald-100">Tailwind</span>
-                            </div>
-                        </div>
-
-                        <!-- Links -->
-                        <div class="flex gap-4">
-                            <a href="#" class="flex items-center gap-2 text-sm font-semibold text-heading hover:text-primary transition-colors border-b-2 border-transparent hover:border-primary pb-0.5">
-                                <i data-lucide="github" class="w-4 h-4"></i> View Code
-                            </a>
-                            <a href="#" class="flex items-center gap-2 text-sm font-semibold text-heading hover:text-primary transition-colors border-b-2 border-transparent hover:border-primary pb-0.5">
-                                <i data-lucide="external-link" class="w-4 h-4"></i> Live Demo
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Right: Vertical Carousel (Narrower on Desktop) -->
-                    <div class="w-full md:w-4/12 order-1 md:order-2 flex justify-center">
-                        <div class="carousel-container relative aspect-9-16 rounded-2xl overflow-hidden shadow-xl border border-slate-100 group">
-                            <div class="carousel-track h-full" id="track-p1">
-                                <!-- Placeholder images for 9:16 mobile screens (w=224, h=384 approx) -->
-                                <img src="https://images.unsplash.com/photo-1627993206233-68d7168d601b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0MDMyNTF8MHwxfGFsbHwxfHx8fHx8fDJ8fDE3MDk3MzY3MTJ8&ixlib=rb-4.0.3&q=80&w=224&h=384" class="carousel-slide" alt="Mobile Dashboard 1">
-                                <img src="https://images.unsplash.com/photo-1599026330962-d98c365d9531?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0MDMyNTF8MHwxfGFsbHwyfHx8fHx8fDJ8fDE3MDk3MzY3MTJ8&ixlib=rb-4.0.3&q=80&w=224&h=384" class="carousel-slide" alt="Mobile Dashboard 2">
-                                <img src="https://images.unsplash.com/photo-1587588354456-480931168478?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0MDMyNTF8MHwxfGFsbHwzfHx8fHx8fDJ8fDE3MDk3MzY3MTJ8&ixlib=rb-4.0.3&q=80&w=224&h=384" class="carousel-slide" alt="Mobile Dashboard 3">
-                            </div>
-                            <button class="carousel-btn prev" onclick="moveCarousel('track-p1', -1)"><i data-lucide="chevron-left" class="w-5 h-5"></i></button>
-                            <button class="carousel-btn next" onclick="moveCarousel('track-p1', 1)"><i data-lucide="chevron-right" class="w-5 h-5"></i></button>
-                        </div>
-                    </div>
-                </div>
-
                 <!-- Project Card 2: STANDARD CAROUSEL (Horizontal) -->
                 <div class="glass-card p-6 md:p-8 rounded-3xl flex flex-col md:flex-row gap-8 items-center bg-white">
                     
@@ -504,25 +455,15 @@
                                 <span class="text-xs font-mono font-bold text-slate-400 bg-slate-100 px-2 py-1 rounded">2023</span>
                             </div>
                             <p class="text-secondary leading-relaxed mb-6">
-                                A driving lesson management app for learner drivers, driving instructors and driving school admins.
+                                A driving lesson management app for learner drivers, driving instructors and driving school admins. I generated a 40 screen map with screen descriptions using Claude, and generated the UI for the app using UXPilot. 
                             </p>
                             
                             <!-- Tech Stack -->
                             <div class="flex flex-wrap gap-2 mb-8">
-                                <span class="px-3 py-1 text-xs font-medium rounded-full bg-orange-50 text-orange-600 border border-orange-100">Vue.js</span>
-                                <span class="px-3 py-1 text-xs font-medium rounded-full bg-purple-50 text-purple-600 border border-purple-100">Firebase</span>
-                                <span class="px-3 py-1 text-xs font-medium rounded-full bg-slate-100 text-slate-600 border border-slate-200">Socket.io</span>
+                                <span class="px-3 py-1 text-xs font-medium rounded-full bg-orange-50 text-orange-600 border border-orange-100">React Native</span>
+                                <span class="px-3 py-1 text-xs font-medium rounded-full bg-purple-50 text-purple-600 border border-purple-100">UXPilot</span>
+                                <span class="px-3 py-1 text-xs font-medium rounded-full bg-slate-100 text-slate-600 border border-slate-200">Claude</span>
                             </div>
-                        </div>
-
-                        <!-- Links -->
-                        <div class="flex gap-4">
-                            <a href="#" class="flex items-center gap-2 text-sm font-semibold text-heading hover:text-primary transition-colors border-b-2 border-transparent hover:border-primary pb-0.5">
-                                <i data-lucide="github" class="w-4 h-4"></i> View Code
-                            </a>
-                            <a href="#" class="flex items-center gap-2 text-sm font-semibold text-heading hover:text-primary transition-colors border-b-2 border-transparent hover:border-primary pb-0.5">
-                                <i data-lucide="external-link" class="w-4 h-4"></i> Live Demo
-                            </a>
                         </div>
                     </div>
 
